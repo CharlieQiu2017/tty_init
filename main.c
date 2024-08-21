@@ -13,9 +13,9 @@ void main (void) {
      The only open file descriptors are 0 (stdin), 1 (stdout), 2 (stderr).
    */
 
-  // close (0);
-  // close (1);
-  // close (2);
+  close (0);
+  close (1);
+  close (2);
 
   /* From this point on we are unable to output anything.
      Hence whenever an error occurs we will exit, resulting in a kernel panic.
@@ -29,11 +29,11 @@ void main (void) {
   if (ret < 0) exit (0);
 
   fd_t fd0 = open ("/dev/ttyAMA0", O_RDWR, 0);
-  if (fd0 < 0) exit (0);
+  if (fd0 != 0) exit (0);
   fd_t fd1 = dup (fd0);
-  if (fd1 < 0) exit (0);
+  if (fd1 != 1) exit (0);
   fd_t fd2 = dup (fd0);
-  if (fd2 < 0) exit (0);
+  if (fd2 != 2) exit (0);
 
   pid_t sid = setsid ();
   if (sid < 0) exit (0);
