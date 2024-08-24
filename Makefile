@@ -1,7 +1,7 @@
 CC = /opt/aarch64-none-elf/bin/aarch64-none-elf-gcc
 AS = /opt/aarch64-none-elf/bin/aarch64-none-elf-as
 LD = /opt/aarch64-none-elf/bin/aarch64-none-elf-ld
-STRIP = /opt/aarch64-none-elf/bin/aarch64-none-elf-strip -s -R .dynamic -R .got -R .got.plt -R .dynsym -R .dynstr -R .hash -R .comment tty_init
+STRIP = /opt/aarch64-none-elf/bin/aarch64-none-elf-strip
 CFLAGS = -nostdinc -nostdlib -ffreestanding
 CFLAGS += -Wall -Wextra -pedantic -Werror -Wfatal-errors
 CFLAGS += -march=armv8-a+crc+crypto -mtune=cortex-a72.cortex-a53
