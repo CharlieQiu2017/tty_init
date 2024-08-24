@@ -5,8 +5,9 @@
 #include <execve.h>
 #include <exit.h>
 
-char * const argv[] = {"/init", (void *) 0};
-char * const envp[] = {(void *) 0};
+static char argv0[] = "/init";
+static char * argv[] = {(void *) 0, (void *) 0};
+static char * envp[] = {(void *) 0};
 
 void main (void) {
   /* Assume that we are the init process.
@@ -42,5 +43,7 @@ void main (void) {
   if (ret < 0) exit (0);
 
   write (fd0, "TTY ready\n", 11);
+
+  argv[0] = argv0;
   execve ("/init", argv, envp);
 }
