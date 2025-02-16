@@ -20,27 +20,30 @@ void main (void) {
 
   /* From this point on we are unable to output anything.
      Hence whenever an error occurs we will exit, resulting in a kernel panic.
+     We use the exit code to differentiate between failures at different steps.
    */
 
   int ret = mount ("none", "/dev", "devtmpfs", 0, 0);
-  if (ret < 0) exit (0);
+  if (ret < 0) exit (1);
   ret = mount ("none", "/proc", "proc", 0, 0);
-  if (ret < 0) exit (0);
+  if (ret < 0) exit (2);
   ret = mount ("none", "/sys", "sysfs", 0, 0);
-  if (ret < 0) exit (0);
+  if (ret < 0) exit (3);
 
-  fd_t fd0 = open ("/dev/ttyAMA0", O_RDWR, 0);
-  if (fd0 != 0) exit (0);
+  /* Rock 4C+ uses ttyS2, but QEMU uses ttyAMA0 */
+  fd_t fd0 = open ("/dev/ttyS2", O_RDWR, 0);
+  if (fd0 < 0) fd0 = open ("/dev/ttyAMA0", O_RDWR, 0);
+  if (fd0 != 0) exit (4);
   fd_t fd1 = dup (fd0);
-  if (fd1 != 1) exit (0);
+  if (fd1 != 1) exit (5);
   fd_t fd2 = dup (fd0);
-  if (fd2 != 2) exit (0);
+  if (fd2 != 2) exit (6);
 
   pid_t sid = setsid ();
-  if (sid < 0) exit (0);
+  if (sid < 0) exit (7);
 
   ret = ioctl (fd0, TIOCSCTTY, (void *) 1);
-  if (ret < 0) exit (0);
+  if (ret < 0) exit (8);
 
   write (fd0, "TTY ready\n", 11);
 
