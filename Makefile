@@ -11,9 +11,9 @@ LDFLAGS = -nostdlib -static --no-dynamic-linker -e _start --gc-sections --build-
 STRIPFLAGS = -s -R .dynamic -R .got -R .got.plt -R .dynsym -R .dynstr -R .hash -R .comment
 
 ifeq ($(optimize),1)
-OPTFLAGS += -Os -fweb
+OPTFLAGS = -Os -fweb
 else
-OPTFLAGS += -O0
+OPTFLAGS = -O0
 endif
 
 LIBC_DIR = /home/z/mini_libc
