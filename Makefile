@@ -5,7 +5,7 @@ STRIP = /opt/aarch64-none-elf/bin/aarch64-none-elf-strip
 FREEFLAGS = -nostdlib -ffreestanding
 WARNFLAGS = -Wall -Wextra -pedantic -Werror -Wfatal-errors
 ARCHFLAGS = -march=armv8-a+crc+crypto -mtune=cortex-a72.cortex-a53
-PROTFLAGS = -fomit-frame-pointer -fno-asynchronous-unwind-tables -fcf-protection=none -fno-stack-protector -fno-stack-clash-protection
+PROTFLAGS = -fomit-frame-pointer -fno-asynchronous-unwind-tables -fcf-protection=none -fno-stack-protector -fno-stack-clash-protection -fno-ident
 GCFLAGS = -ffunction-sections
 LDFLAGS = -nostdlib -static --no-dynamic-linker -e _start --gc-sections --build-id=none
 STRIPFLAGS = -s -R .dynamic -R .got -R .got.plt -R .dynsym -R .dynstr -R .hash -R .comment
